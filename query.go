@@ -3,6 +3,7 @@ package sqlq
 import (
 	"context"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -371,8 +372,26 @@ func (q *Query) String(field string) string {
 	}
 }
 
-func (q *Query) Json(field string) interface{} {
-	return q.Value(field)
+func (q *Query) Json(field string) json.RawMessage {
+	v := q.Value(field)
+	if v == nil {
+		return json.RawMessage{}
+	}
+
+	switch d := v.(type) {
+	case json.RawMessage:
+		return d
+	case string:
+		return json.RawMessage(d)
+	case []byte:
+		return json.RawMessage(d)
+	default:
+		if j, err := json.Marshal(v); err != nil {
+			return json.RawMessage{}
+		} else {
+			return json.RawMessage(j)
+		}
+	}
 }
 
 func (q *Query) StringArray(field string) []string {
