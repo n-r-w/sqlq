@@ -375,7 +375,7 @@ func (q *Query) String(field string) string {
 func (q *Query) Json(field string) json.RawMessage {
 	v := q.Value(field)
 	if v == nil {
-		return json.RawMessage{}
+		return nil
 	}
 
 	switch d := v.(type) {
@@ -387,7 +387,7 @@ func (q *Query) Json(field string) json.RawMessage {
 		return json.RawMessage(d)
 	default:
 		if j, err := json.Marshal(v); err != nil {
-			return json.RawMessage{}
+			return nil
 		} else {
 			return json.RawMessage(j)
 		}
