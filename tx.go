@@ -48,12 +48,21 @@ func (t *Tx) Context() context.Context {
 
 // Begin - start a transaction. If the transaction has already started, it is returned
 func (t *Tx) Begin() error {
+	return t.BeginTx(pgx.ReadCommitted, pgx.ReadWrite)
+}
+
+// Begin - start a transaction. If the transaction has already started, it is returned
+func (t *Tx) BeginTx(level pgx.TxIsoLevel, mode pgx.TxAccessMode) error {
 	if t.counter > 0 {
 		t.counter++
 		return nil
 	}
 
-	tx, err := t.pool.Begin(t.ctx)
+	tx, err := t.pool.BeginTx(t.ctx, pgx.TxOptions{
+		IsoLevel:       level,
+		AccessMode:     mode,
+		DeferrableMode: "",
+	})
 	if err != nil {
 		return nerr.New(err)
 	}
