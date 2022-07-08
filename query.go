@@ -825,12 +825,44 @@ func SelectRow(pool *pgxpool.Pool, context context.Context, sql string) (*Query,
 	return q, nil
 }
 
+func SelectRowBindOne(pool *pgxpool.Pool, context context.Context, template string, variable string, value any, key string) (*Query, error) {
+	if sql, err := sqlb.BindOne(template, variable, value, key); err != nil {
+		return nil, err
+	} else {
+		return SelectRow(pool, context, sql)
+	}
+}
+
+func SelectRowBind(pool *pgxpool.Pool, context context.Context, template string, values map[string]any, key string) (*Query, error) {
+	if sql, err := sqlb.Bind(template, values, key); err != nil {
+		return nil, err
+	} else {
+		return SelectRow(pool, context, sql)
+	}
+}
+
 func SelectTx(tx *Tx, sql string) (*Query, error) {
 	q := NewQueryTx(tx, tx.ctx)
 	if err := q.Select(sql); err != nil {
 		return nil, err
 	}
 	return q, nil
+}
+
+func SelectTxBindOne(tx *Tx, template string, variable string, value any, key string) (*Query, error) {
+	if sql, err := sqlb.BindOne(template, variable, value, key); err != nil {
+		return nil, err
+	} else {
+		return SelectTx(tx, sql)
+	}
+}
+
+func SelectTxBind(tx *Tx, template string, values map[string]any, key string) (*Query, error) {
+	if sql, err := sqlb.Bind(template, values, key); err != nil {
+		return nil, err
+	} else {
+		return SelectTx(tx, sql)
+	}
 }
 
 func SelectTxRow(tx *Tx, sql string) (*Query, error) {
@@ -844,6 +876,22 @@ func SelectTxRow(tx *Tx, sql string) (*Query, error) {
 	return q, nil
 }
 
+func SelectTxRowBindOne(tx *Tx, template string, variable string, value any, key string) (*Query, error) {
+	if sql, err := sqlb.BindOne(template, variable, value, key); err != nil {
+		return nil, err
+	} else {
+		return SelectTxRow(tx, sql)
+	}
+}
+
+func SelectTxRowBind(tx *Tx, template string, values map[string]any, key string) (*Query, error) {
+	if sql, err := sqlb.Bind(template, values, key); err != nil {
+		return nil, err
+	} else {
+		return SelectTxRow(tx, sql)
+	}
+}
+
 func Exec(pool *pgxpool.Pool, context context.Context, sql string) (*Query, error) {
 	q := NewQuery(pool, context)
 	if err := q.Exec(sql); err != nil {
@@ -852,10 +900,42 @@ func Exec(pool *pgxpool.Pool, context context.Context, sql string) (*Query, erro
 	return q, nil
 }
 
+func ExecBindOne(pool *pgxpool.Pool, context context.Context, template string, variable string, value any, key string) (*Query, error) {
+	if sql, err := sqlb.BindOne(template, variable, value, key); err != nil {
+		return nil, err
+	} else {
+		return Exec(pool, context, sql)
+	}
+}
+
+func ExecBind(pool *pgxpool.Pool, context context.Context, template string, values map[string]any, key string) (*Query, error) {
+	if sql, err := sqlb.Bind(template, values, key); err != nil {
+		return nil, err
+	} else {
+		return Exec(pool, context, sql)
+	}
+}
+
 func ExecTx(tx *Tx, sql string) error {
 	q := NewQueryTx(tx, tx.ctx)
 	if err := q.Exec(sql); err != nil {
 		return err
 	}
 	return nil
+}
+
+func ExecTxBindOne(tx *Tx, template string, variable string, value any, key string) error {
+	if sql, err := sqlb.BindOne(template, variable, value, key); err != nil {
+		return err
+	} else {
+		return ExecTx(tx, sql)
+	}
+}
+
+func ExecTxBind(tx *Tx, template string, values map[string]any, key string) error {
+	if sql, err := sqlb.Bind(template, values, key); err != nil {
+		return err
+	} else {
+		return ExecTx(tx, sql)
+	}
 }
