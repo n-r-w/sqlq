@@ -916,25 +916,25 @@ func ExecBind(pool *pgxpool.Pool, context context.Context, template string, valu
 	}
 }
 
-func ExecTx(tx *Tx, sql string) error {
+func ExecTx(tx *Tx, sql string) (*Query, error) {
 	q := NewQueryTx(tx, tx.ctx)
 	if err := q.Exec(sql); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return q, nil
 }
 
-func ExecTxBindOne(tx *Tx, template string, variable string, value any, key string) error {
+func ExecTxBindOne(tx *Tx, template string, variable string, value any, key string) (*Query, error) {
 	if sql, err := sqlb.BindOne(template, variable, value, key); err != nil {
-		return err
+		return nil, err
 	} else {
 		return ExecTx(tx, sql)
 	}
 }
 
-func ExecTxBind(tx *Tx, template string, values map[string]any, key string) error {
+func ExecTxBind(tx *Tx, template string, values map[string]any, key string) (*Query, error) {
 	if sql, err := sqlb.Bind(template, values, key); err != nil {
-		return err
+		return nil, err
 	} else {
 		return ExecTx(tx, sql)
 	}
