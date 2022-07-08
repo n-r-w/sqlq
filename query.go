@@ -28,7 +28,7 @@ type Query struct {
 	tag    pgconn.CommandTag
 	fields map[string]int
 
-	lastValues       []interface{}
+	lastValues       []any
 	lastDescriptions []pgproto3.FieldDescription
 }
 
@@ -122,7 +122,7 @@ func (q *Query) Exec(sql string) error {
 }
 
 // ExecBind - execution of the insert, update, delete command with the substitution of values in the template
-func (q *Query) ExecBind(sqlTemplate string, values map[string]interface{}, key string) error {
+func (q *Query) ExecBind(sqlTemplate string, values map[string]any, key string) error {
 	binder := sqlb.NewBinder(sqlTemplate, key)
 	if err := binder.BindValues(values); err != nil {
 		return err
@@ -175,7 +175,7 @@ func (q *Query) SelectRow(sql string) (bool, error) {
 }
 
 // SelectBind - executing the select command with the substitution of values in the template
-func (q *Query) SelectBind(sqlTemplate string, values map[string]interface{}, key string) error {
+func (q *Query) SelectBind(sqlTemplate string, values map[string]any, key string) error {
 	binder := sqlb.NewBinder(sqlTemplate, key)
 	if err := binder.BindValues(values); err != nil {
 		return err
@@ -189,7 +189,7 @@ func (q *Query) SelectBind(sqlTemplate string, values map[string]interface{}, ke
 }
 
 // SelectBindRow - executing the select command with the substitution of values in the template for 1 row select
-func (q *Query) SelectBindRow(sqlTemplate string, values map[string]interface{}, key string) (bool, error) {
+func (q *Query) SelectBindRow(sqlTemplate string, values map[string]any, key string) (bool, error) {
 
 	err := q.SelectBind(sqlTemplate, values, key)
 	if err != nil {
@@ -293,10 +293,10 @@ func (q *Query) Contains(field string) bool {
 	return ok
 }
 
-func (q *Query) Values() ([]interface{}, error) {
+func (q *Query) Values() ([]any, error) {
 	if q.rows == nil {
 		if len(q.lastDescriptions) == 0 {
-			return []interface{}{}, nil
+			return []any{}, nil
 		} else {
 			return q.lastValues, nil
 		}
@@ -314,7 +314,7 @@ func (q *Query) IsNull(field string) bool {
 }
 
 // Value - field value by name (only for Select and after a successful Next call)
-func (q *Query) Value(field string) interface{} {
+func (q *Query) Value(field string) any {
 	pos, ok := q.fields[strings.ToLower(field)]
 	if !ok {
 		return nil
@@ -329,7 +329,7 @@ func (q *Query) Value(field string) interface{} {
 }
 
 // ValueIndex - field value by index (only for Select and after a successful Next call)
-func (q *Query) ValueIndex(fieldIndex int) interface{} {
+func (q *Query) ValueIndex(fieldIndex int) any {
 	if q.rows == nil || fieldIndex < 0 || fieldIndex >= len(q.fields) {
 		return nil
 	}
@@ -524,7 +524,7 @@ func intArrayHelper[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16
 	}
 }
 
-func intConvertHelper[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64](v interface{}) T {
+func intConvertHelper[T int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64](v any) T {
 	if v == nil {
 		return T(0)
 	}
