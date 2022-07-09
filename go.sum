@@ -14,6 +14,8 @@ github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/me
 github.com/gofrs/uuid v4.0.0+incompatible h1:1SD/1F5pU8p29ybwgQSwpQk+mwdRrXCYuPhW6m+TnJw=
 github.com/gofrs/uuid v4.0.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
+github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
+github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/jackc/chunkreader v1.0.0/go.mod h1:RT6O25fNZIuasFJRyZ4R/Y2BbhasbmZXF9QQ7T3kePo=
 github.com/jackc/chunkreader/v2 v2.0.0/go.mod h1:odVSm741yZoC3dpHEUXIqA9tQRhFrgOHwnPIn9lDKlk=
 github.com/jackc/chunkreader/v2 v2.0.1 h1:i+RDz65UE+mmpjTfyz0MoVTnzeYxroil2G82ki7MGG8=
@@ -80,12 +82,12 @@ github.com/mattn/go-colorable v0.1.6/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope
 github.com/mattn/go-isatty v0.0.5/go.mod h1:Iq45c/XA43vh69/j3iqttzPXn0bhXyGjM0Hdxcsrc5s=
 github.com/mattn/go-isatty v0.0.7/go.mod h1:Iq45c/XA43vh69/j3iqttzPXn0bhXyGjM0Hdxcsrc5s=
 github.com/mattn/go-isatty v0.0.12/go.mod h1:cbi8OIDigv2wuxKPP5vlRcQ1OAZbq2CE4Kysco4FUpU=
-github.com/n-r-w/eno v1.0.1 h1:PikzBF89YDV21hh1nSCKizOnhqmDOGMGM+tK6zT26OM=
-github.com/n-r-w/eno v1.0.1/go.mod h1:602sG4zbQuxCJQRvjRYAuyiVNV9TbBA1te7o5L63+nc=
+github.com/n-r-w/eno v1.0.2 h1:nSHTkHmVNQLj20K1gDS+ImJzM7/jO8wNW5GxF60ssDY=
+github.com/n-r-w/eno v1.0.2/go.mod h1:602sG4zbQuxCJQRvjRYAuyiVNV9TbBA1te7o5L63+nc=
 github.com/n-r-w/nerr v1.0.4 h1:6frh5ySEed9Myunbz6P/Dmaz+LkY2/7tbFEx8yRZmpY=
 github.com/n-r-w/nerr v1.0.4/go.mod h1:6YFwCzftSlF+eEDE8zm3BNuXTAjURXrcbDP+tOJhy7Y=
-github.com/n-r-w/sqlb v1.0.8 h1:LHoOeJn/qyqpsXY1AQeprVa251Biomr/nIzrxOpbWpQ=
-github.com/n-r-w/sqlb v1.0.8/go.mod h1:uQRR3GbB9Ul1oPUi4zDw6+qIJVAdLbg+1owjWRFa8o4=
+github.com/n-r-w/sqlb v1.0.9 h1:3Z8o0NMiSJ5RkH9S29sEDvSMGSypOJsQPbvdeDFh5cg=
+github.com/n-r-w/sqlb v1.0.9/go.mod h1:sZH78ID5L7uxQt8hgDtcmpDYsN+EzhAIeJPpZYK5GiE=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
