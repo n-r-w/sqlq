@@ -97,5 +97,9 @@ func (t *Tx) Rollback() error {
 	t.counter = 0
 	err := t.tx.Rollback(t.ctx)
 	t.tx = nil
-	return nerr.New(err)
+	if err != nil {
+		return nerr.New(err)
+	} else {
+		return nil
+	}
 }
