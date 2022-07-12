@@ -806,12 +806,28 @@ func (q *Query) Bytes(field string) []byte {
 	panic(fmt.Errorf("can't convert to []byte: %s", field))
 }
 
-func Select(pool *pgxpool.Pool, context context.Context, sql string) (*Query, error) {
-	q := NewQuery(pool, context)
+func Select(pool *pgxpool.Pool, ctx context.Context, sql string) (*Query, error) {
+	q := NewQuery(pool, ctx)
 	if err := q.Select(sql); err != nil {
 		return nil, err
 	}
 	return q, nil
+}
+
+func SelectBind(pool *pgxpool.Pool, ctx context.Context, template string, values map[string]any, key string) (*Query, error) {
+	if sql, err := sqlb.Bind(template, values, key); err != nil {
+		return nil, err
+	} else {
+		return Select(pool, ctx, sql)
+	}
+}
+
+func SelectBindOne(pool *pgxpool.Pool, ctx context.Context, template string, variable string, value any, key string) (*Query, error) {
+	if sql, err := sqlb.BindOne(template, variable, value, key); err != nil {
+		return nil, err
+	} else {
+		return Select(pool, ctx, sql)
+	}
 }
 
 func SelectRow(pool *pgxpool.Pool, context context.Context, sql string) (*Query, error) {
