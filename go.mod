@@ -8,7 +8,7 @@ require (
 	github.com/jackc/pgtype v1.11.0
 	github.com/jackc/pgx/v4 v4.16.1
 	github.com/n-r-w/nerr v1.0.7
-	github.com/n-r-w/sqlb v1.0.10
+	github.com/n-r-w/sqlb v1.0.11
 )
 
 require (
