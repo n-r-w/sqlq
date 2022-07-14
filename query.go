@@ -91,6 +91,9 @@ func (q *Query) RowsAffected() int64 {
 		q.rows.Close()
 		return q.rows.CommandTag().RowsAffected()
 	}
+	if len(q.tag) > 0 {
+		return q.tag.RowsAffected()
+	}
 	return 0
 }
 
